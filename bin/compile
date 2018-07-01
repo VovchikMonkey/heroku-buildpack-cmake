@@ -5,12 +5,8 @@
 
 cd /app
 find . -type d
-echo "cd App"
-echo $(ls)
-cd /app/docker
-echo "cd docker"
-echo $(ls)
-cd node_modules/opencv-build/opencv/
+
+cd /app/tmp/cache/node/node_modules/opencv-build/opencv/
 echo "cd opencv"
 echo $(ls)
 rm -rf opencv_contrib opencv
