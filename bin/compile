@@ -1,6 +1,8 @@
 #!/bin/sh
 # bin/compile BUILD_DIR CACHE_DIR ENV_DIR
 
+find .
+
 cd /app
 echo "cd App"
 echo $(ls)
