@@ -1,6 +1,10 @@
 #!/bin/sh
 # bin/compile BUILD_DIR CACHE_DIR ENV_DIR
 
+echo $1
+echo $2
+echo $3
+echo $4
 
 cd /app
 echo $(ls)
@@ -18,4 +22,4 @@ cd build/
 rm *.txt *.cmake *.hpp *.tmp *.h
 rm -rf CMakeFiles/ unix-install/ doc/ modules/ share/ downloads/ data/ 3rdparty/ opencv2/ lib64/ junk Makefile
 
-#exit 1
+exit 1
