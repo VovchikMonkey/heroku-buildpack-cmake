@@ -4,7 +4,7 @@
 
 
 cd /app
-find .
+find . -type d
 echo "cd App"
 echo $(ls)
 cd /app/docker
