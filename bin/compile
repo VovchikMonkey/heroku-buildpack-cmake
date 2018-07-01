@@ -3,8 +3,8 @@
 
 
 
-cd /app
-#find . -type d
+cd /app/docker
+find . -type d
 
 cd /app/tmp/cache/node/node_modules/opencv-build/opencv/
 echo "cd opencv"
