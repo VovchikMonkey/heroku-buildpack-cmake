@@ -1,23 +1,8 @@
 #!/bin/sh
 # bin/compile BUILD_DIR CACHE_DIR ENV_DIR
 
-echo $1
-echo $2
-echo $3
-echo $4
-
 cd $1
-echo $(ls)
-
-cd /app
-echo $(ls)
-
-cd /app/docker
-find . -type d
-cd /app/bin
-find . -type d
-
-cd /app/tmp/cache/node/node_modules/opencv-build/opencv/
+cd ./node_modules/opencv-build/opencv/
 echo "cd opencv"
 echo $(ls)
 rm -rf opencv_contrib opencv
