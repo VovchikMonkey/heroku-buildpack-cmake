@@ -2,8 +2,12 @@
 # bin/compile BUILD_DIR CACHE_DIR ENV_DIR
 
 
+cd /app
+echo $(ls)
 
 cd /app/docker
+find . -type d
+cd /app/bin
 find . -type d
 
 cd /app/tmp/cache/node/node_modules/opencv-build/opencv/
