@@ -4,6 +4,9 @@
 cd /app
 echo "cd App"
 echo $(ls)
+cd /app/docker
+echo "cd docker"
+echo $(ls)
 cd node_modules/opencv-build/opencv/
 echo "cd opencv"
 echo $(ls)
@@ -11,3 +14,5 @@ rm -rf opencv_contrib opencv
 cd build/
 rm *.txt *.cmake *.hpp *.tmp *.h
 rm -rf CMakeFiles/ unix-install/ doc/ modules/ share/ downloads/ data/ 3rdparty/ opencv2/ lib64/ junk Makefile
+
+exit $err
