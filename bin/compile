@@ -1,6 +1,19 @@
 #!/bin/sh
 # bin/compile BUILD_DIR CACHE_DIR ENV_DIR
 
+BUILD_DIR=$1
+CACHE_DIR=$2
+PKG_VERSION="3.4.1"
+VENDOR_PATH="/app/vendor/opencv"
+TARGET_PATH="/tmp/codon/vendor/opencv"
+CACHE_PATH="$CACHE_DIR/opencv_$PKG_ETAG"
+SLUG_PATH="$BUILD_DIR/vendor/opencv"
+PROFILE_PATH="$BUILD_DIR/.profile.d"
+
+mkdir -p  "$TARGET_PATH"
+rm    -rf                "$VENDOR_PATH"
+ln    -s  "$TARGET_PATH" "$VENDOR_PATH"
+
 cd $1
 cd ./node_modules/opencv-build/opencv/
 if [ $? -eq 0 ]; then
@@ -10,4 +23,42 @@ if [ $? -eq 0 ]; then
     cd build/
     rm *.txt *.cmake *.hpp *.tmp *.h
     rm -rf CMakeFiles/ unix-install/ doc/ modules/ share/ downloads/ data/ 3rdparty/ opencv2/ lib64/ junk Makefile
+    
+    cp    -a ./include        "$TARGET_PATH/"
+    cp    -a ./lib            "$TARGET_PATH/"
+    mkdir -p                  "$CACHE_PATH"
+    cp    -a "$TARGET_PATH/." "$CACHE_PATH
+    
+    # copy libs into slug
+    mkdir -p                  "$SLUG_PATH"
+    cp    -a "$TARGET_PATH"/* "$SLUG_PATH"
+    
+    arrow() {
+      sed -u 's/^/-----> /'
+    }
+    indent() {
+      sed -u 's/^/       /'
+    }
+
+    # configure paths
+    mkdir -p    "$PROFILE_PATH"
+    cat <<EOF > "$PROFILE_PATH/opencv.sh"
+    export LD_LIBRARY_PATH="$VENDOR_PATH/lib:\$LD_LIBRARY_PATH"
+    export    LIBRARY_PATH="$VENDOR_PATH/lib:\$LIBRARY_PATH"
+    export    INCLUDE_PATH="$VENDOR_PATH/include:\$INCLUDE_PATH"
+    export           CPATH="$VENDOR_PATH/include:\$CPATH"
+    export         CPPPATH="$VENDOR_PATH/include:\$CPPPATH"
+    export PKG_CONFIG_PATH="$VENDOR_PATH/lib/pkgconfig:\$PKG_CONFIG_PATH"
+    # builtin unset may be overridden to be no-op
+    unset LIBRARY_PATH INCLUDE_PATH CPATH CPPPATH PKG_CONFIG_PATH
+    EOF
+
+    # propagate paths to subsequent buildpacks
+    export    LIBRARY_PATH="$TARGET_PATH/lib:$LIBRARY_PATH"
+    export    INCLUDE_PATH="$TARGET_PATH/include:$INCLUDE_PATH"
+    export           CPATH="$TARGET_PATH/include:$CPATH"
+    export         CPPPATH="$TARGET_PATH/include:$CPPPATH"
+    export PKG_CONFIG_PATH="$TARGET_PATH/lib/pkgconfig:$PKG_CONFIG_PATH"
+    export | grep -Ee '\s(LIBRARY_PATH|INCLUDE_PATH|CPATH|CPPPATH|PKG_CONFIG_PATH)=' > "$BUILDPACK_DIR/export"
+    echo "Exported:  LIBRARY_PATH INCLUDE_PATH CPATH CPPPATH PKG_CONFIG_PATH" | indent
 fi
