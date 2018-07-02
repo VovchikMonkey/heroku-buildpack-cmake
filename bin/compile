@@ -32,9 +32,12 @@ if [ $? -eq 0 ]; then
     rm *.txt *.cmake *.hpp *.tmp *.h
     rm -rf CMakeFiles/ unix-install/ doc/ modules/ share/ downloads/ data/ 3rdparty/ opencv2/ lib64/ junk Makefile
     
-    cp /usr/lib/x86_64-linux-gnu/libjasper.so* "$TARGET_PATH/lib/"
+    echo $(ls)
+   
     cp    -a ./include        "$TARGET_PATH/"
     cp    -a ./lib            "$TARGET_PATH/"
+    cp /usr/lib/x86_64-linux-gnu/libjasper.so* "$TARGET_PATH/lib/"
+     
     mkdir -p                  "$CACHE_PATH"
     cp    -a "$TARGET_PATH/." "$CACHE_PATH"
     
