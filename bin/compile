@@ -35,7 +35,7 @@ if [ $? -eq 0 ]; then
     cp    -a ./include        "$TARGET_PATH/"
     cp    -a ./lib            "$TARGET_PATH/"
     mkdir -p                  "$CACHE_PATH"
-    cp    -a "$TARGET_PATH/." "$CACHE_PATH
+    cp    -a "$TARGET_PATH/." "$CACHE_PATH"
     
     # copy libs into slug
     mkdir -p                  "$SLUG_PATH"
