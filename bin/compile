@@ -3,6 +3,7 @@
 
 BUILD_DIR=$1
 CACHE_DIR=$2
+BUILDPACK_DIR=`cd $(dirname $0)/..; pwd`
 PKG_VERSION="3.4.1"
 VENDOR_PATH="/app/vendor/opencv"
 TARGET_PATH="/tmp/codon/vendor/opencv"
