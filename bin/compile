@@ -1,6 +1,13 @@
 #!/bin/sh
 # bin/compile BUILD_DIR CACHE_DIR ENV_DIR
 
+arrow() {
+  sed -u 's/^/-----> /'
+}
+indent() {
+  sed -u 's/^/       /'
+}
+    
 BUILD_DIR=$1
 CACHE_DIR=$2
 BUILDPACK_DIR=`cd $(dirname $0)/..; pwd`
@@ -34,13 +41,6 @@ if [ $? -eq 0 ]; then
     mkdir -p                  "$SLUG_PATH"
     cp    -a "$TARGET_PATH"/* "$SLUG_PATH"
     
-    arrow() {
-      sed -u 's/^/-----> /'
-    }
-    indent() {
-      sed -u 's/^/       /'
-    }
-
     # configure paths
     mkdir -p    "$PROFILE_PATH"
     cat <<EOF > "$PROFILE_PATH/opencv.sh"
